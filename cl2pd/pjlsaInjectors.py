@@ -60,8 +60,8 @@ System = java.lang.System
 # no java operation at import time because java might not be available and 
 #  mgr.resolve will (silently) fail
 if callable(org.apache.log4j.varia.NullAppender):
-  null=org.apache.log4j.varia.NullAppender()
-  org.apache.log4j.BasicConfigurator.configure(null)
+    null=org.apache.log4j.varia.NullAppender()
+    org.apache.log4j.BasicConfigurator.configure(null)
 
 # Java classes
 ContextService    = cern.lsa.client.ContextService
@@ -146,21 +146,27 @@ class LSAClient(object):
         t = java.sql.Timestamp.valueOf(time).fastTime
         res = self._contextService.findUserContextMappingHistory(self.accelerator,
                                                                  contextFamily, 0, t)
-	ts = 0
+        ts = 0
         cycle = None
-	for ct in res:
-            if ct.user == name:
-		if ct.mappingTimestamp > ts:
-			ts = ct.mappingTimestamp
-			cycle = ct.contextName
+        for ct in res:
+                if ct.user == name:
+                    if ct.mappingTimestamp > ts:
+                        ts = ct.mappingTimestamp
+                        cycle = ct.contextName
 
-	return cycle, ts
+        return cycle, ts
 
     def _findParameters(self, name, group):
         req = ParametersRequestBuilder()
         req.setAccelerator(self.accelerator)
         req.setParameterName(name)
         req.setParameterGroup(group)
+        return self._parameterService.findParameters(req.build())
+    
+    def _findParameters2(self, name):
+        req = ParametersRequestBuilder()
+        req.setAccelerator(self.accelerator)
+        req.setParameterName(name)
         return self._parameterService.findParameters(req.build())
 
     def _parseSetting(self, setting, part):
@@ -186,19 +192,19 @@ class LSAClient(object):
                 raise ValueError('Invalid Setting Part: ' + part)
             value = [df.toYArray()[:], df.toXArray()[:]]
 
-	return value
+        return value
 
     def getTrim(self, cycle, name, group, time, part='value'):
         context = self._contextService.findStandAloneCycle(cycle)
         processes = context.getBeamProcesses()
         parameter = self._findParameters(name, group)
         if len(parameter) == 0:
-		return None
+            return None
         time = java.sql.Timestamp.valueOf(time)
         context_setting = self._settingService.findContextSettings(context, parameter, time)
         parameter_setting = context_setting.getParameterSettings(list(parameter)[0])
         if parameter_setting is None:
-                return None
+            return None
 
         time = []
         value = []
@@ -218,7 +224,7 @@ class LSAClient(object):
 
 
     def _getRawTrimHeaders(self, processes, parameters, start, end):
-	trimhReq = TrimHeadersRequestBuilder()
+        trimhReq = TrimHeadersRequestBuilder()
         trimhReq.beamProcesses(processes)
         trimhReq.parameters(parameters)
         trimHeaders = trimhReq.build()
@@ -258,7 +264,7 @@ class LSAClient(object):
                 setting = None
                 time_aux = []
                 value_aux = []
-		for bp in list(processes):
+                for bp in list(processes):
                     setting = parameterSetting.getSetting(bp)
                     aux = self._parseSetting(setting, part)
                     if aux is None:
@@ -267,11 +273,54 @@ class LSAClient(object):
                     value_aux.append(aux[0])
                     time_aux.append(aux[1] + bp.getStartTime())
 
-
-                value_aux = np.concatenate(value_aux)
-                time_aux = np.concatenate(time_aux)
-                timestamps.append(th.createdDate.getTime()/1000)
-                value.append({'time' : time_aux,
-                             'value': value_aux})
+            value_aux = np.concatenate(value_aux)
+            time_aux = np.concatenate(time_aux)
+            timestamps.append(th.createdDate.getTime()/1000)
+            value.append({'time' : time_aux,'value': value_aux})
         return timestamps, value
+    
+    def getTrims2(self, cycle, name, start, end, part='value'):
+        context = self._contextService.findStandAloneCycle(cycle)
+        processes = context.getBeamProcesses()
 
+        paramReq = ParametersRequestBuilder()
+        paramReq.setAccelerator(self.accelerator)
+        paramReq.setParameterName(name)
+        #paramReq.setParameterGroup(group)
+        parameters = self._parameterService.findParameters(paramReq.build())
+
+        timestamps = []
+        value = []
+        comment=[]
+        for th in self._getRawTrimHeaders(processes, parameters, start, end):
+            csrb = ContextSettingsRequestBuilder()
+            csrb.standAloneContext(context)
+            csrb.parameters(parameters)
+            csrb.at(th.createdDate.toInstant())
+            mycsrb=csrb.build()
+            contextSettings =  self._settingService.findContextSettings(mycsrb)
+
+            for pp in parameters:
+                parameterSetting = contextSettings.getParameterSettings(pp)
+                if parameterSetting is None:
+                    continue
+
+                setting = None
+                time_aux = []
+                value_aux = []
+                for bp in list(processes):
+                    setting = parameterSetting.getSetting(bp)
+                    aux = self._parseSetting(setting, part)
+                    if aux is None:
+                        continue
+
+                    value_aux.append(aux[0])
+                    time_aux.append(aux[1] + bp.getStartTime())
+    
+
+            value_aux = np.concatenate(value_aux)
+            time_aux = np.concatenate(time_aux)
+            timestamps.append(th.createdDate.getTime()/1000)
+            comment.append(th.description)
+            value.append({'time' : time_aux,'value': value_aux})
+        return timestamps, value, comment
