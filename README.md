@@ -14,7 +14,7 @@ The luminosity team was actinve in suggestions and comments (particularly I. Eft
 
 The parsing for the TFS files was suggested by H. Bartosik.
 
-The pjlsa routine are written by R. De Maria, M. Hostettler, V. Baggiolini, M. Carla', M. Beck and K. Li.
+The pjlsa routine are written by R. De Maria, M. Hostettler, V. Baggiolini, M. Carlà, M. Beck and K. Li.
 
 ## Install the package
 You can install the package, for instance on the SWAN terminal (www.swan.cern.ch), using:
