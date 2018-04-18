@@ -10,12 +10,11 @@ An important source of inspiration was the package **pytimber** by R. De Maria e
 
 A. Poyet has been and is a major contributore and beta-tester.
 
-The luminosity team was actinve in suggestions and comments (particularty I. Efthymiopoulos, M. Hostettler, G. Iadarola and  N. Karastathis).
+The luminosity team was actinve in suggestions and comments (particularly I. Efthymiopoulos, M. Hostettler, G. Iadarola and  N. Karastathis).
 
 The parsing for the TFS files was suggested by H. Bartosik.
 
 The pjlsa routine are written by R. De Maria, M. Hostettler, V. Baggiolini, M. Carla', M. Beck and K. Li.
-They work was very useful.
 
 ## Install the package
 You can install the package, for instance on the SWAN terminal (www.swan.cern.ch), using:
