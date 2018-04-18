@@ -7,6 +7,9 @@ http://datasciencefree.com/pandas.pdf.
 
 An important source of inspiration was the package **pytimber** by R. De Maria et al. and their generous approach in sharing tools and foster collaborations.
 
+The pjlsa routine are written by R. De Maria, M. Hostettler, V. Baggiolini, M. Carla', M. Beck and K. Li.
+They work was very useful.
+
 ## Install the package
 You can install the package, for instance on the SWAN terminal (www.swan.cern.ch), using:
 ```
