@@ -34,7 +34,7 @@ Authors:
 
 M. Carla' <michele.carla@cern.ch>
 M. Beck   <mario.beck@cern.ch>
-K. Li     <kevin.shing.beruce.li@cern.ch>
+K. Li     <kevin.shing.bruce.li@cern.ch>
 
 '''
 
