@@ -6,7 +6,7 @@ For a schematic and succinct introduction to pandas please refers for example to
 http://datasciencefree.com/pandas.pdf.
 
 ###  Acknowledgment
-An important source of inspiration was the package **pytimber** by R. De Maria et al. and their generous approach in sharing tools and foster collaborations.
+An important source of inspiration was the package pytimber by R. De Maria et al. and their generous approach in sharing tools and foster collaborations.
 
 A. Poyet has been and is a major contributore and beta-tester.
 
