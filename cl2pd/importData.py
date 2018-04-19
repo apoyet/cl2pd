@@ -651,3 +651,13 @@ def tfs2pd(file):
         globalDF=globalDF.set_index('FILE_NAME')
         globalDF.index.name=''
         return globalDF
+
+    
+ def splitDF(myDF, startList, endList):
+    '''
+    Split the pandas dataframe in a list of dataframes using the index intervals in startList and endList.
+    '''
+    myList=[]
+    for i in range(len(startList)):
+        myList.append(myDF[startList[i]:endList[i]])
+    return myList
