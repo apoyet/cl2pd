@@ -5,12 +5,12 @@ This data type is very convenient to represent time series and it offers a large
 For a schematic and succinct introduction to pandas please refers for example to 
 http://datasciencefree.com/pandas.pdf.
 
-###  Acknowledgment
-An important source of inspiration was the package pytimber by R. De Maria et al. and their generous approach in sharing tools and foster collaborations.
+###  Acknowledgments
+An important source of inspiration was the pytimber package by R. De Maria et al. and their generous approach in sharing tools and foster collaborations.
 
-A. Poyet has been and is a major contributore and beta-tester.
+A. Poyet has been and is a major contributor and beta-tester.
 
-The luminosity team was actinve in suggestions and comments (particularly I. Efthymiopoulos, M. Hostettler, G. Iadarola and  N. Karastathis).
+The luminosity team was active in suggestions and comments (particularly I. Efthymiopoulos, M. Hostettler, G. Iadarola and  N. Karastathis).
 
 The parsing for the TFS files was suggested by H. Bartosik.
 
