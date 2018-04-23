@@ -16,6 +16,10 @@ The parsing for the TFS files was suggested by H. Bartosik.
 
 The pjlsa routine are written by R. De Maria, M. Hostettler, V. Baggiolini, M. Carlà, M. Beck and K. Li.
 
+The interface of with matlab files was done with the contribution of D. Gamba and C. Hernalsteens.
+
+The interface with pyJapc was done thanks to the help fo T. Levens and M. Betz.
+
 ## Install the package
 You can install the package, for instance on the SWAN terminal (www.swan.cern.ch), using:
 ```
